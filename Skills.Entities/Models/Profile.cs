@@ -9,7 +9,7 @@ public partial class Profile
 {
     public decimal ProfileId { get; set; }
 
-    public string Profile1 { get; set; }
+    public string ProfileName { get; set; }
 
     public string Description { get; set; }
 

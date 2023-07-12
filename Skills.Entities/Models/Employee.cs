@@ -13,7 +13,7 @@ public partial class Employee
 
     public string LastName { get; set; }
 
-    public decimal? ProfileId { get; set; }
+    public decimal ProfileId { get; set; }
 
     public string Email { get; set; }
 

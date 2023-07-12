@@ -495,10 +495,10 @@ public partial class SKILLS_DEVContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("DESCRIPTION");
             entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
-            entity.Property(e => e.Profile1)
+            entity.Property(e => e.ProfileName)
                 .HasMaxLength(20)
                 .IsFixedLength()
-                .HasColumnName("PROFILE");
+                .HasColumnName("PROFILE_NAME");
         });
 
         modelBuilder.Entity<RankingCriterion>(entity =>
