@@ -8,6 +8,10 @@ namespace Skills.Entities.Models;
 
 public partial class SKILLS_DEVContext : DbContext
 {
+    public SKILLS_DEVContext()
+    {
+    }
+
     public SKILLS_DEVContext(DbContextOptions<SKILLS_DEVContext> options)
         : base(options)
     {

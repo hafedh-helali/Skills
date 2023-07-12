@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Skills.Entities.Entities;
-
-//using WebApiCoreWithEF.Models;
+//using Skills.Entities.Entities;
 
 namespace Skills.Entities.Context
 {
@@ -12,8 +10,8 @@ namespace Skills.Entities.Context
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<Profile> Profiles { get; set; }
+        //public DbSet<Profile> Profiles { get; set; }
     }
 }

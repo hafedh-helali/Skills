@@ -2,7 +2,7 @@
 {
     public class ProfileModel
     {
-        public decimal ProfileId { get;set }
+        public decimal ProfileId { get; set; }
 
         public string ProfileName { get;set; }
     }

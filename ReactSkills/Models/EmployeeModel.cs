@@ -10,7 +10,7 @@
 
         public string? Email { get; set; }
 
-        public decimal? ProfileId { get; set; }
+        public decimal ProfileId { get; set; }
 
         public decimal? AgencyId { get; set; }
 
