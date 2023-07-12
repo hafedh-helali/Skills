@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Skills.Entities.Context;
+using Skills.Entities.Models;
+using System.Text.Json.Serialization;
+
 //using WebApiCoreWithEF.Context;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<SkillsContext>(options =>
+builder.Services.AddDbContext<SKILLS_DEVContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SkillsConnStr"));
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.WriteIndented = true;
 });
 
 var app = builder.Build();
@@ -26,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 
 app.UseAuthorization();
 

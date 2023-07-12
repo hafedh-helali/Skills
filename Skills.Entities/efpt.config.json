@@ -1,0 +1,130 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "SKILLS_DEVContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Skills.Entities",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[AGENCY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANNUAL_INTERVIEW_FIELD_ITEM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANNUALINTERVIEW]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANNUALINTERVIEW_FIELD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANNUALINTERVIEW_RANKING]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AREA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AUTHORIZATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EMPLOYEE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FIELD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FIELD_ASSIGNMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FIELD_TYPE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FIELD_TYPE_ITEM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[IMPROVEMENTAREA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[IMPROVEMENTAREAS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INTERVIEW_FIELDS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LAYOUT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LAYOUT_FIELD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PROFILE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RANKING_CRITERION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[STATUS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[STATUS_TRACKING]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SYSTEM_PARAMETER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[USER]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "sqldevserver\\ssdev.SKILLS_DEV.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

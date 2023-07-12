@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Skills.Entities.Context;
-using Skills.Entities.Entities;
+using Skills.Entities.Models;
+using EmployeeModel = ReactSkills.Models.EmployeeModel;
 
 namespace ReactSkills.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly SkillsContext _skillsContext;
-        public EmployeesController(SkillsContext skillsContext)
+        private readonly SKILLS_DEVContext _skillsContext;
+
+        public EmployeesController(SKILLS_DEVContext skillsContext)
         {
             _skillsContext = skillsContext;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        [Route("getemployeeslist")]
+        public async Task<IActionResult> GetAllAsync()
         {
-            var employees = await _skillsContext.Employees.ToListAsync();
+            var employees = await _skillsContext.Employee.ToListAsync();
             return Ok(employees);
         }
 
@@ -24,16 +26,27 @@ namespace ReactSkills.Controllers
         [Route("getemployeebyid")]
         public async Task<IActionResult> GetEmployeeByIdAsync(decimal id)
         {
-            var employee = await _skillsContext.Employees.FindAsync(id);
+            var employee = await _skillsContext.Employee.FindAsync(id);
             return Ok(employee);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Employee employee)
+        [Route("saveemployee")]
+        public async Task<IActionResult> PostEmployeeAsync(EmployeeModel employee)
         {
-            _skillsContext.Employees.Add(employee);
+            Employee emp = new Employee
+            {
+                LastName = employee.LastName,
+                FirstName = employee.FirstName,
+                ProfileId = employee.ProfileId,
+                AgencyId = employee.AgencyId,
+                Email = employee.Email,
+                EntryDate = employee.EntryDate
+            };
+
+            _skillsContext.Employee.Add(emp);
             await _skillsContext.SaveChangesAsync();
-            return Created($"/getemployeebyid?id={employee.EMPLOYEE_ID}", employee);
+            return Created($"/getemployeebyid?id={employee.EmployeeId}", employee);
         }
     }
 }
