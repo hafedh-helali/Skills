@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skills.Entities.Models;
+namespace Skills.Entities.Entities;
 
 public partial class Agency
 {

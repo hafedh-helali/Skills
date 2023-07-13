@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skills.Entities.Models;
+namespace Skills.Entities.Entities;
 
 public partial class Annualinterview
 {
@@ -22,10 +22,6 @@ public partial class Annualinterview
     public bool? InterviewerEnabled { get; set; }
 
     public decimal? DelegatedBy { get; set; }
-
-    public virtual ICollection<AnnualInterviewFieldItem> AnnualInterviewFieldItem { get; set; } = new List<AnnualInterviewFieldItem>();
-
-    public virtual ICollection<AnnualinterviewField> AnnualinterviewField { get; set; } = new List<AnnualinterviewField>();
 
     public virtual ICollection<AnnualinterviewRanking> AnnualinterviewRanking { get; set; } = new List<AnnualinterviewRanking>();
 

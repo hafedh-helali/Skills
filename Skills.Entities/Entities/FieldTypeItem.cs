@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skills.Entities.Models;
+namespace Skills.Entities.Entities;
 
 public partial class FieldTypeItem
 {
@@ -12,8 +12,4 @@ public partial class FieldTypeItem
     public decimal? FieldTypeId { get; set; }
 
     public string ItemLabel { get; set; }
-
-    public virtual ICollection<AnnualInterviewFieldItem> AnnualInterviewFieldItem { get; set; } = new List<AnnualInterviewFieldItem>();
-
-    public virtual FieldType FieldType { get; set; }
 }

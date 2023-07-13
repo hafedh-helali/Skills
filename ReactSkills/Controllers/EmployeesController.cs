@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Skills.Entities.Models;
-using EmployeeModel = ReactSkills.Models.EmployeeModel;
+using ReactSkills.Models;
+using Skills.Entities.Context;
+using Skills.Entities.Entities;
 
 namespace ReactSkills.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly SKILLS_DEVContext _skillsContext;
+        private readonly SkillsContext _skillsContext;
 
-        public EmployeesController(SKILLS_DEVContext skillsContext)
+        public EmployeesController(SkillsContext skillsContext)
         {
             _skillsContext = skillsContext;
         }

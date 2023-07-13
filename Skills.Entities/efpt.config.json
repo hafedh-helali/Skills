@@ -1,13 +1,13 @@
 ﻿{
    "CodeGenerationMode": 3,
-   "ContextClassName": "SKILLS_DEVContext",
+   "ContextClassName": "SkillsContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "Entities",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "Skills.Entities",
    "Schemas": null,
@@ -19,15 +19,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ANNUAL_INTERVIEW_FIELD_ITEM]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[ANNUALINTERVIEW]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ANNUALINTERVIEW_FIELD]",
          "ObjectType": 0
       },
       {
@@ -43,6 +35,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CHANGE_TRACKING]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[EMPLOYEE]",
          "ObjectType": 0
       },
@@ -51,7 +47,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[FIELD_ASSIGNMENT]",
+         "Name": "[dbo].[FIELD_ACCESS]",
          "ObjectType": 0
       },
       {
@@ -68,10 +64,6 @@
       },
       {
          "Name": "[dbo].[IMPROVEMENTAREAS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[INTERVIEW_FIELDS]",
          "ObjectType": 0
       },
       {

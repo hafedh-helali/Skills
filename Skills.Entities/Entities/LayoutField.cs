@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skills.Entities.Models;
+namespace Skills.Entities.Entities;
 
 public partial class LayoutField
 {
@@ -16,6 +16,8 @@ public partial class LayoutField
     public int? VerticalPosition { get; set; }
 
     public int? WidthPercentage { get; set; }
+
+    public bool? HorizontalyAligned { get; set; }
 
     public virtual Field Field { get; set; }
 

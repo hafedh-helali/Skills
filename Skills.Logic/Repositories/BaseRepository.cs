@@ -1,9 +1,7 @@
-﻿
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Skills.Logic.Interfaces;
-using Skills.Entities.Models;
+using Skills.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +9,13 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Skills.Logic.Constants;
+using Skills.Entities.Context;
 
 namespace Skills.Logic.Repositories
 {
     public class BaseRepository<TObject> : IBaseRepository<TObject> where TObject : class
     {
-        protected SKILLS_DEVContext _context = new SKILLS_DEVContext();
+        protected SkillsContext _context = new SkillsContext();
 
         #region Create
 
@@ -73,7 +72,7 @@ namespace Skills.Logic.Repositories
         }
         public async Task<TObject> UpdateAsMatchAsync(string login, TObject updated, Expression<Func<TObject, bool>> match)
         {
-            _context = new SKILLS_DEVContext();
+            _context = new SkillsContext();
             if (updated == null)
                 return null;
 
@@ -130,7 +129,7 @@ namespace Skills.Logic.Repositories
 
         public async Task<int> DeleteAsync(TObject t)
         {
-            _context = new SKILLS_DEVContext();
+            _context = new SkillsContext();
             _context.Entry(t).State = EntityState.Deleted;
             return await _context.SaveChangesAsync();
         }

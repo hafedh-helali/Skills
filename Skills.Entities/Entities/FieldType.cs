@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skills.Entities.Models;
+namespace Skills.Entities.Entities;
 
 public partial class FieldType
 {
@@ -11,11 +11,7 @@ public partial class FieldType
 
     public string FieldType1 { get; set; }
 
-    public int? Columns { get; set; }
-
-    public int? Rows { get; set; }
+    public string Comments { get; set; }
 
     public virtual ICollection<Field> Field { get; set; } = new List<Field>();
-
-    public virtual ICollection<FieldTypeItem> FieldTypeItem { get; set; } = new List<FieldTypeItem>();
 }

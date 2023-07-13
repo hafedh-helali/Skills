@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Skills.Entities.Models;
+using Skills.Entities.Context;
 using System.Text.Json.Serialization;
 
 //using WebApiCoreWithEF.Context;
@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<SKILLS_DEVContext>(options =>
+builder.Services.AddDbContext<SkillsContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SkillsConnStr"));
 });
