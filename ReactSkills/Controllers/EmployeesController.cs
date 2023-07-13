@@ -28,9 +28,9 @@ namespace ReactSkills.Controllers
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     AgencyId = employee.AgencyId,
-                    Agency = employee.Agency.AgencyName,
+                    //Agency = employee.Agency.AgencyName,
                     ProfileId = employee.ProfileId,
-                    Profile = employee.Profile.ProfileName,
+                    //Profile = employee.Profile.ProfileName,
                     ManagerId = employee.ManagerId,
                     Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
                 });
