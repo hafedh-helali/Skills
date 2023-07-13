@@ -45,6 +45,12 @@ namespace ReactSkills.Controllers
         public async Task<IActionResult> GetEmployeeByIdAsync(decimal id)
         {
             var employee = await _skillsContext.Employee.FindAsync(id);
+
+            if (employee == null)
+            {
+                return BadRequest("Employé Introuvable");
+            }
+
             return Ok(employee);
         }
 
@@ -52,19 +58,43 @@ namespace ReactSkills.Controllers
         [Route("saveemployee")]
         public async Task<IActionResult> PostEmployeeAsync(EmployeeModel employee)
         {
-            Employee emp = new Employee
+            try
             {
-                LastName = employee.LastName,
-                FirstName = employee.FirstName,
-                ProfileId = employee.ProfileId,
-                AgencyId = employee.AgencyId,
-                Email = employee.Email,
-                EntryDate = employee.EntryDate
-            };
+                Employee emp = new Employee
+                {
+                    LastName = employee.LastName,
+                    FirstName = employee.FirstName,
+                    ProfileId = employee.ProfileId,
+                    AgencyId = employee.AgencyId,
+                    Email = employee.Email,
+                    EntryDate = employee.EntryDate
+                };
 
-            _skillsContext.Employee.Add(emp);
-            await _skillsContext.SaveChangesAsync();
-            return Created($"/getemployeebyid?id={employee.EmployeeId}", employee);
+                _skillsContext.Employee.Add(emp);
+                await _skillsContext.SaveChangesAsync();
+                return Created($"/getemployeebyid?id={employee.EmployeeId}", employee);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erreur lors de la création de la fiche employé");
+            }
+        }
+
+        [HttpGet]
+        [Route("getprofileslist")]
+        public async Task<IActionResult> GetAllProfilesAsync()
+        {
+            var profiles = await _skillsContext.Profile.ToListAsync();
+            List<ProfileModel> result = new();
+            foreach (var profile in profiles)
+            {
+                result.Add(new ProfileModel()
+                {
+                    ProfileId = profile.ProfileId,
+                    ProfileName = profile.ProfileName
+                });
+            }
+            return Ok(result);
         }
     }
 }
