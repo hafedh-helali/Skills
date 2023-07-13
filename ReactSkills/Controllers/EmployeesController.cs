@@ -23,14 +23,16 @@ namespace ReactSkills.Controllers
             List<EmployeeModel> result = new List<EmployeeModel>();
             foreach (var employee in employees)
             {
+                _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
+                _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
                 result.Add(new EmployeeModel()
                 {
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     AgencyId = employee.AgencyId,
-                    //Agency = employee.Agency.AgencyName,
+                    Agency = employee.Agency.AgencyName,
                     ProfileId = employee.ProfileId,
-                    //Profile = employee.Profile.ProfileName,
+                    Profile = employee.Profile.ProfileName,
                     ManagerId = employee.ManagerId,
                     Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
                 });
