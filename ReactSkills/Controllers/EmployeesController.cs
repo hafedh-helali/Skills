@@ -20,7 +20,22 @@ namespace ReactSkills.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var employees = await _skillsContext.Employee.ToListAsync();
-            return Ok(employees);
+            List<EmployeeModel> result = new List<EmployeeModel>();
+            foreach (var employee in employees)
+            {
+                result.Add(new EmployeeModel()
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    AgencyId = employee.AgencyId,
+                    Agency = employee.Agency.AgencyName,
+                    ProfileId = employee.ProfileId,
+                    Profile = employee.Profile.ProfileName,
+                    ManagerId = employee.ManagerId,
+                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
+                });
+            }
+            return Ok(result);
         }
 
         [HttpGet]
