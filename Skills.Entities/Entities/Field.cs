@@ -29,13 +29,13 @@ public partial class Field
 
     public decimal? LinkedFieldId { get; set; }
 
+    public decimal? LayoutId { get; set; }
+
     public virtual ICollection<FieldAccess> FieldAccess { get; set; } = new List<FieldAccess>();
+
+    public virtual ICollection<FieldItem> FieldItem { get; set; } = new List<FieldItem>();
 
     public virtual FieldType FieldType { get; set; }
 
-    public virtual ICollection<Field> InverseLinkedField { get; set; } = new List<Field>();
-
-    public virtual ICollection<LayoutField> LayoutField { get; set; } = new List<LayoutField>();
-
-    public virtual Field LinkedField { get; set; }
+    public virtual Layout Layout { get; set; }
 }

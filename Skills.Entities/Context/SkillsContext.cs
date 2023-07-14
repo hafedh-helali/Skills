@@ -9,10 +9,10 @@ namespace Skills.Entities.Context;
 
 public partial class SkillsContext : DbContext
 {
-
     public SkillsContext()
     {
     }
+
     public SkillsContext(DbContextOptions<SkillsContext> options)
         : base(options)
     {
@@ -36,6 +36,8 @@ public partial class SkillsContext : DbContext
 
     public virtual DbSet<FieldAccess> FieldAccess { get; set; }
 
+    public virtual DbSet<FieldItem> FieldItem { get; set; }
+
     public virtual DbSet<FieldType> FieldType { get; set; }
 
     public virtual DbSet<FieldTypeItem> FieldTypeItem { get; set; }
@@ -47,6 +49,8 @@ public partial class SkillsContext : DbContext
     public virtual DbSet<Layout> Layout { get; set; }
 
     public virtual DbSet<LayoutField> LayoutField { get; set; }
+
+    public virtual DbSet<LayoutType> LayoutType { get; set; }
 
     public virtual DbSet<Profile> Profile { get; set; }
 
@@ -296,6 +300,9 @@ public partial class SkillsContext : DbContext
                 .HasMaxLength(2000)
                 .HasColumnName("FIELD_VALUE");
             entity.Property(e => e.Height).HasColumnName("HEIGHT");
+            entity.Property(e => e.LayoutId)
+                .HasColumnType("numeric(18, 0)")
+                .HasColumnName("LAYOUT_ID");
             entity.Property(e => e.LinkedFieldId)
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("LINKED_FIELD_ID");
@@ -306,9 +313,9 @@ public partial class SkillsContext : DbContext
                 .HasForeignKey(d => d.FieldTypeId)
                 .HasConstraintName("FK_FIELD_FIELD_TYPE");
 
-            entity.HasOne(d => d.LinkedField).WithMany(p => p.InverseLinkedField)
-                .HasForeignKey(d => d.LinkedFieldId)
-                .HasConstraintName("FK_FIELD_FIELD");
+            entity.HasOne(d => d.Layout).WithMany(p => p.Field)
+                .HasForeignKey(d => d.LayoutId)
+                .HasConstraintName("FK_FIELD_LAYOUT");
         });
 
         modelBuilder.Entity<FieldAccess>(entity =>
@@ -330,6 +337,30 @@ public partial class SkillsContext : DbContext
                 .HasForeignKey(d => d.FieldId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FIELD_ACCESS_FIELD");
+        });
+
+        modelBuilder.Entity<FieldItem>(entity =>
+        {
+            entity.ToTable("FIELD_ITEM");
+
+            entity.Property(e => e.FieldItemId)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("numeric(18, 0)")
+                .HasColumnName("FIELD_ITEM_ID");
+            entity.Property(e => e.FieldId)
+                .HasColumnType("numeric(18, 0)")
+                .HasColumnName("FIELD_ID");
+            entity.Property(e => e.FieldItemHorizontal).HasColumnName("FIELD_ITEM_HORIZONTAL");
+            entity.Property(e => e.FieldItemLabel)
+                .HasMaxLength(50)
+                .HasColumnName("FIELD_ITEM_LABEL");
+            entity.Property(e => e.Tooltip)
+                .HasMaxLength(50)
+                .HasColumnName("TOOLTIP");
+
+            entity.HasOne(d => d.Field).WithMany(p => p.FieldItem)
+                .HasForeignKey(d => d.FieldId)
+                .HasConstraintName("FK_FIELD_ITEM_FIELD");
         });
 
         modelBuilder.Entity<FieldType>(entity =>
@@ -425,10 +456,17 @@ public partial class SkillsContext : DbContext
             entity.Property(e => e.LayoutProfile)
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("LAYOUT_PROFILE");
+            entity.Property(e => e.LayoutTypeId)
+                .HasColumnType("numeric(18, 0)")
+                .HasColumnName("LAYOUT_TYPE_ID");
             entity.Property(e => e.OtherProperties)
                 .HasMaxLength(200)
                 .HasColumnName("OTHER_PROPERTIES");
             entity.Property(e => e.Rows).HasColumnName("ROWS");
+
+            entity.HasOne(d => d.LayoutType).WithMany(p => p.Layout)
+                .HasForeignKey(d => d.LayoutTypeId)
+                .HasConstraintName("FK_LAYOUT_LAYOUT_TYPE");
         });
 
         modelBuilder.Entity<LayoutField>(entity =>
@@ -447,16 +485,23 @@ public partial class SkillsContext : DbContext
             entity.Property(e => e.HorizontalyAligned).HasColumnName("HORIZONTALY_ALIGNED");
             entity.Property(e => e.VerticalPosition).HasColumnName("VERTICAL_POSITION");
             entity.Property(e => e.WidthPercentage).HasColumnName("WIDTH_PERCENTAGE");
+        });
 
-            entity.HasOne(d => d.Field).WithMany(p => p.LayoutField)
-                .HasForeignKey(d => d.FieldId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LAYOUT_FIELD_FIELD");
+        modelBuilder.Entity<LayoutType>(entity =>
+        {
+            entity.ToTable("LAYOUT_TYPE");
 
-            entity.HasOne(d => d.Layout).WithMany(p => p.LayoutField)
-                .HasForeignKey(d => d.LayoutId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LAYOUT_FIELD_LAYOUT");
+            entity.Property(e => e.LayoutTypeId)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("numeric(18, 0)")
+                .HasColumnName("LAYOUT_TYPE_ID");
+            entity.Property(e => e.Comments)
+                .HasMaxLength(100)
+                .HasColumnName("COMMENTS");
+            entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+            entity.Property(e => e.LayoutTypeName)
+                .HasMaxLength(50)
+                .HasColumnName("LAYOUT_TYPE_NAME");
         });
 
         modelBuilder.Entity<Profile>(entity =>

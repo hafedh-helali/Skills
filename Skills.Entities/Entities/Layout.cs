@@ -19,7 +19,11 @@ public partial class Layout
 
     public string OtherProperties { get; set; }
 
+    public decimal? LayoutTypeId { get; set; }
+
     public virtual ICollection<ChangeTracking> ChangeTracking { get; set; } = new List<ChangeTracking>();
 
-    public virtual ICollection<LayoutField> LayoutField { get; set; } = new List<LayoutField>();
+    public virtual ICollection<Field> Field { get; set; } = new List<Field>();
+
+    public virtual LayoutType LayoutType { get; set; }
 }

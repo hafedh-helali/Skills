@@ -50,8 +50,26 @@ namespace ReactSkills.Controllers
             {
                 return BadRequest("Employé Introuvable");
             }
+            _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
+            _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
+            _skillsContext.Entry(employee).Reference(e => e.Manager).Load();
 
-            return Ok(employee);
+            EmployeeModel employeeModel = new EmployeeModel()
+            {
+                AgencyId = employee.AgencyId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                ProfileId = employee.ProfileId,
+                Profile = employee.Profile.ProfileName,
+                ManagerId = employee.ManagerId,
+                Manager = employee.Manager.FirstName + " " + employee.Manager.LastName,
+                Agency = employee.Agency.AgencyName,
+                Email = employee.Email,
+                EmployeeId = employee.EmployeeId,
+                EntryDate = employee.EntryDate
+            };
+
+            return Ok(employeeModel);
         }
 
         [HttpPost]

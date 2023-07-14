@@ -51,6 +51,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[FIELD_ITEM]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[FIELD_TYPE]",
          "ObjectType": 0
       },
@@ -72,6 +76,10 @@
       },
       {
          "Name": "[dbo].[LAYOUT_FIELD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LAYOUT_TYPE]",
          "ObjectType": 0
       },
       {

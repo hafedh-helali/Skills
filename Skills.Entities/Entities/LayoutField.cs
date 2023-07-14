@@ -18,8 +18,4 @@ public partial class LayoutField
     public int? WidthPercentage { get; set; }
 
     public bool? HorizontalyAligned { get; set; }
-
-    public virtual Field Field { get; set; }
-
-    public virtual Layout Layout { get; set; }
 }
