@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Skills.Logic.Constants;
 using Skills.Entities.Context;
 
-namespace Skills.Logic.Repositories
+namespace Skills.Logic
 {
     public class BaseRepository<TObject> : IBaseRepository<TObject> where TObject : class
     {
@@ -51,10 +51,12 @@ namespace Skills.Logic.Repositories
         {
             return await _context.Set<TObject>().SingleOrDefaultAsync(match);
         }
+
         public async Task<TObject> FindFirstAsync(Expression<Func<TObject, bool>> match)
         {
             return await _context.Set<TObject>().FirstOrDefaultAsync(match);
         }
+
         #endregion Read one
 
         #region Update one
@@ -70,6 +72,7 @@ namespace Skills.Logic.Repositories
             await _context.SaveChangesAsync();
             return updated;
         }
+
         public async Task<TObject> UpdateAsMatchAsync(string login, TObject updated, Expression<Func<TObject, bool>> match)
         {
             _context = new SkillsContext();
@@ -87,6 +90,7 @@ namespace Skills.Logic.Repositories
             await _context.SaveChangesAsync();
             return updated;
         }
+
         #endregion Update one
 
         #region Update many
@@ -228,11 +232,11 @@ namespace Skills.Logic.Repositories
 
         protected void _SetAuditFields_Update<I>(string login, I entity) where I : class
         {
-            _SetPropertyAsUnModified<I>(entity, AuditFields.USER_CRE);
-            _SetPropertyAsUnModified<I>(entity, AuditFields.DAT_CRE);
+            _SetPropertyAsUnModified(entity, AuditFields.USER_CRE);
+            _SetPropertyAsUnModified(entity, AuditFields.DAT_CRE);
 
-            _SetProperty<I>(entity, AuditFields.USER_MAJ, login);
-            _SetProperty<I>(entity, AuditFields.DAT_MAJ, DateTime.Now);
+            _SetProperty(entity, AuditFields.USER_MAJ, login);
+            _SetProperty(entity, AuditFields.DAT_MAJ, DateTime.Now);
         }
 
 
@@ -247,11 +251,11 @@ namespace Skills.Logic.Repositories
 
         protected void _SetAuditFields_Insert<I>(string login, I entity) where I : class
         {
-            _SetProperty<I>(entity, AuditFields.USER_CRE, login);
-            _SetProperty<I>(entity, AuditFields.DAT_CRE, DateTime.Now);
+            _SetProperty(entity, AuditFields.USER_CRE, login);
+            _SetProperty(entity, AuditFields.DAT_CRE, DateTime.Now);
 
-            _SetProperty<I>(entity, AuditFields.USER_MAJ, login);
-            _SetProperty<I>(entity, AuditFields.DAT_MAJ, DateTime.Now);
+            _SetProperty(entity, AuditFields.USER_MAJ, login);
+            _SetProperty(entity, AuditFields.DAT_MAJ, DateTime.Now);
         }
 
         private string GetUserName(HttpContext httpContext)

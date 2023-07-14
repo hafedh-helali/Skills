@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace Skills.Logic.Interfaces
 {
-    internal interface IEmployeeRepository : IBaseRepository<Employee>
+    public interface IEmployeeRepository : IBaseRepository<Employee>
     {
+        /// <summary>
+        /// Get employees
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<Employee> GetALlEmployees(int id);
     }
 }

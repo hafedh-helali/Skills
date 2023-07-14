@@ -3,22 +3,37 @@ using Microsoft.EntityFrameworkCore;
 using ReactSkills.Models;
 using Skills.Entities.Context;
 using Skills.Entities.Entities;
+//using Skills.Logic.Repositories;
+using Skills.Logic.Interfaces;
 
 namespace ReactSkills.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly SkillsContext _skillsContext;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeesController(SkillsContext skillsContext)
+        #region constructor
+
+        public EmployeesController(IEmployeeRepository employeeRepository)
         {
-            _skillsContext = skillsContext;
+            _employeeRepository = employeeRepository;
+
         }
+
+        #endregion constructor
+
+        //public EmployeesController(SkillsContext skillsContext)
+        //{
+        //    _skillsContext = skillsContext;
+        //}
 
         [HttpGet]
         [Route("getemployeeslist")]
         public async Task<IActionResult> GetAllAsync()
         {
+            var employeesfromrepo = _employeeRepository.GetAll();
+
             var employees = await _skillsContext.Employee.ToListAsync();
             List<EmployeeModel> result = new List<EmployeeModel>();
             foreach (var employee in employees)
