@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReactSkills.Models;
 using Skills.Entities.Context;
 using Skills.Entities.Entities;
+
 //using Skills.Logic.Repositories;
 using Skills.Logic.Interfaces;
 
@@ -18,7 +19,6 @@ namespace ReactSkills.Controllers
         public EmployeesController(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
-
         }
 
         #endregion constructor
@@ -32,26 +32,41 @@ namespace ReactSkills.Controllers
         [Route("getemployeeslist")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var employeesfromrepo = _employeeRepository.GetAll();
-
-            var employees = await _skillsContext.Employee.ToListAsync();
             List<EmployeeModel> result = new List<EmployeeModel>();
-            foreach (var employee in employees)
+            var employeesfromrepo = _employeeRepository.GetAll();
+            foreach (var employee in employeesfromrepo)
             {
-                _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
-                _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
                 result.Add(new EmployeeModel()
                 {
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     AgencyId = employee.AgencyId,
-                    Agency = employee.Agency.AgencyName,
+                    //Agency = employee.Agency.AgencyName,
                     ProfileId = employee.ProfileId,
-                    Profile = employee.Profile.ProfileName,
+                    //Profile = employee.Profile.ProfileName,
                     ManagerId = employee.ManagerId,
-                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
+                    //Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
                 });
             }
+
+            //var employees = await _skillsContext.Employee.ToListAsync();
+            ////List<EmployeeModel> result = new List<EmployeeModel>();
+            //foreach (var employee in employees)
+            //{
+            //    _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
+            //    _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
+            //    result.Add(new EmployeeModel()
+            //    {
+            //        FirstName = employee.FirstName,
+            //        LastName = employee.LastName,
+            //        AgencyId = employee.AgencyId,
+            //        Agency = employee.Agency.AgencyName,
+            //        ProfileId = employee.ProfileId,
+            //        Profile = employee.Profile.ProfileName,
+            //        ManagerId = employee.ManagerId,
+            //        Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
+            //    });
+            //}
             return Ok(result);
         }
 

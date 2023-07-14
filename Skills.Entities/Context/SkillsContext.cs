@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Skills.Entities.Entities;
 
 namespace Skills.Entities.Context;
@@ -63,6 +64,20 @@ public partial class SkillsContext : DbContext
     public virtual DbSet<SystemParameter> SystemParameter { get; set; }
 
     public virtual DbSet<User> User { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var config = new ConfigurationBuilder()
+
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json").Build();
+
+        var c = config["ConnectionStrings:SkillsConnStr"];
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(c);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
