@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Skills.Logic.Interfaces;
-using Skills.Entities.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Skills.Logic.Constants;
 using Skills.Entities.Context;
+using Skills.Logic.Constants;
+using Skills.Logic.Interfaces;
+using System.Linq.Expressions;
 
 namespace Skills.Logic
 {
     public class BaseRepository<TObject> : IBaseRepository<TObject> where TObject : class
     {
-        protected SkillsContext _context = new SkillsContext();
+        protected SkillsContext _context;
+        protected readonly DbSet<TObject> _dbSet;
+
+        #region constructor
+
+        public BaseRepository()
+        {
+            _context = new SkillsContext();
+            _dbSet = _context.Set<TObject>();
+        }
+
+        #endregion constructor
 
         #region Create
 
@@ -55,6 +60,24 @@ namespace Skills.Logic
         public async Task<TObject> FindFirstAsync(Expression<Func<TObject, bool>> match)
         {
             return await _context.Set<TObject>().FirstOrDefaultAsync(match);
+        }
+
+        public async Task<IEnumerable<TObject>> EntityWithEagerLoad(Expression<Func<TObject, bool>> filter, string[] children)
+        {
+            try
+            {
+                IQueryable<TObject> query = _dbSet;
+                foreach (string entity in children)
+                {
+                    query = query.Include(entity);
+                }
+                return await query.Where(filter).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.ToString());
+                throw;
+            }
         }
 
         #endregion Read one
@@ -188,7 +211,7 @@ namespace Skills.Logic
             return t;
         }
 
-        #endregion
+        #endregion Insert Or update
 
         #region Private Methodes
 
@@ -239,7 +262,6 @@ namespace Skills.Logic
             _SetProperty(entity, AuditFields.DAT_MAJ, DateTime.Now);
         }
 
-
         protected void _SetAuditFields_Insert(string login, TObject entity)
         {
             _SetProperty(entity, AuditFields.USER_CRE, login);
@@ -269,8 +291,6 @@ namespace Skills.Logic
             return userName;
         }
 
-        #endregion
-
+        #endregion Private Methodes
     }
 }
-

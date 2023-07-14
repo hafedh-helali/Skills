@@ -32,41 +32,26 @@ namespace ReactSkills.Controllers
         [Route("getemployeeslist")]
         public async Task<IActionResult> GetAllAsync()
         {
-            List<EmployeeModel> result = new List<EmployeeModel>();
-            var employeesfromrepo = _employeeRepository.GetAll();
-            foreach (var employee in employeesfromrepo)
+            List<EmployeeModel> result = new();
+            var children = new string[] { "Profile", "Agency", "Manager" };
+
+            var employees = await _employeeRepository.EntityWithEagerLoad(d => d.EmployeeId > 0, children);
+
+            foreach (var employee in employees)
             {
                 result.Add(new EmployeeModel()
                 {
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     AgencyId = employee.AgencyId,
-                    //Agency = employee.Agency.AgencyName,
+                    Agency = employee.Agency.AgencyName,
                     ProfileId = employee.ProfileId,
-                    //Profile = employee.Profile.ProfileName,
+                    Profile = employee.Profile.ProfileName,
                     ManagerId = employee.ManagerId,
-                    //Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
+                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
                 });
             }
 
-            //var employees = await _skillsContext.Employee.ToListAsync();
-            ////List<EmployeeModel> result = new List<EmployeeModel>();
-            //foreach (var employee in employees)
-            //{
-            //    _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
-            //    _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
-            //    result.Add(new EmployeeModel()
-            //    {
-            //        FirstName = employee.FirstName,
-            //        LastName = employee.LastName,
-            //        AgencyId = employee.AgencyId,
-            //        Agency = employee.Agency.AgencyName,
-            //        ProfileId = employee.ProfileId,
-            //        Profile = employee.Profile.ProfileName,
-            //        ManagerId = employee.ManagerId,
-            //        Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
-            //    });
-            //}
             return Ok(result);
         }
 
@@ -74,30 +59,40 @@ namespace ReactSkills.Controllers
         [Route("getemployeebyid")]
         public async Task<IActionResult> GetEmployeeByIdAsync(decimal id)
         {
-            var employee = await _skillsContext.Employee.FindAsync(id);
-
-            if (employee == null)
+            var employeeModel = new EmployeeModel();
+            try
             {
-                return BadRequest("Employé Introuvable");
+                var children = new string[] { "Profile", "Agency", "Manager" };
+
+                var employees = await _employeeRepository.EntityWithEagerLoad(d => d.EmployeeId == id,
+                children);
+                var employee = employees.FirstOrDefault<Employee>();
+
+                if (employee == null)
+                {
+                    return BadRequest("Employé Introuvable");
+                }
+
+                employeeModel = new EmployeeModel()
+                {
+                    AgencyId = employee.AgencyId,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    ProfileId = employee.ProfileId,
+                    Profile = employee.Profile.ProfileName,
+                    ManagerId = employee.ManagerId,
+                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName,
+                    Agency = employee.Agency.AgencyName,
+                    Email = employee.Email,
+                    EmployeeId = employee.EmployeeId,
+                    EntryDate = employee.EntryDate
+                };
             }
-            _skillsContext.Entry(employee).Reference(e => e.Agency).Load();
-            _skillsContext.Entry(employee).Reference(e => e.Profile).Load();
-            _skillsContext.Entry(employee).Reference(e => e.Manager).Load();
-
-            EmployeeModel employeeModel = new EmployeeModel()
+            catch (Exception e)
             {
-                AgencyId = employee.AgencyId,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                ProfileId = employee.ProfileId,
-                Profile = employee.Profile.ProfileName,
-                ManagerId = employee.ManagerId,
-                Manager = employee.Manager.FirstName + " " + employee.Manager.LastName,
-                Agency = employee.Agency.AgencyName,
-                Email = employee.Email,
-                EmployeeId = employee.EmployeeId,
-                EntryDate = employee.EntryDate
-            };
+                Console.WriteLine(e.Message);
+                throw;
+            }
 
             return Ok(employeeModel);
         }
