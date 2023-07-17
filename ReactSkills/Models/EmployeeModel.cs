@@ -22,7 +22,7 @@
 
         public string? Manager { get; set; }
 
-        public DateTime EntryDate { get; set; }
+        public string? EntryDate { get; set; }
 
     }
 }

@@ -48,7 +48,8 @@ namespace ReactSkills.Controllers
                     ProfileId = employee.ProfileId,
                     Profile = employee.Profile.ProfileName,
                     ManagerId = employee.ManagerId,
-                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName
+                    Manager = employee.Manager.FirstName + " " + employee.Manager.LastName,
+                    EntryDate = employee.EntryDate.ToShortDateString()
                 });
             }
 
@@ -85,7 +86,7 @@ namespace ReactSkills.Controllers
                     Agency = employee.Agency.AgencyName,
                     Email = employee.Email,
                     EmployeeId = employee.EmployeeId,
-                    EntryDate = employee.EntryDate
+                    EntryDate = employee.EntryDate.ToShortDateString()
                 };
             }
             catch (Exception e)
@@ -110,7 +111,7 @@ namespace ReactSkills.Controllers
                     ProfileId = employee.ProfileId,
                     AgencyId = employee.AgencyId,
                     Email = employee.Email,
-                    EntryDate = employee.EntryDate
+                    EntryDate = DateTime.Parse(employee.EntryDate)
                 };
 
                 _skillsContext.Employee.Add(emp);
